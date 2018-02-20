@@ -25,7 +25,23 @@ class TwoDArray(object): # yes, I know everything exists in numpy already.
     	[-1, -1],
     	[-2, -3]
     ]
-    
+    >>> print arr[0, 0]
+    0
+    >>> print arr2[1, 1]
+    3
+    >>> arr2[1, 1] = -30; print arr2[1, 1]
+    -30
+    >>> arr3 = TwoDArray(2, 3, [[1, 1], [2, 5], [3, 4]])
+    >>> print arr3 # doctest: +NORMALIZE_WHITESPACE
+    [
+    	[1, 1],
+    	[2, 5],
+    	[3, 4]
+    ]
+    >>> arr = [TwoDArray(1, 2, [[1], [2]]), TwoDArray(2, 1, [[54, 21]])]
+    >>> print arr[0]
+    >>> print arr[1]
+    >>> print arr[0] * arr[1]
     
     """
     def __init__(self, m, n, array=None):
@@ -110,7 +126,16 @@ class TwoDArray(object): # yes, I know everything exists in numpy already.
         return ret            
         
     def __mul__(self, other):
-        pass
+        if self.n != other.m:
+            raise Exception("Arrays are not of same dimensions for multiplication!")
+
+        ret = TwoDArray(other.n, self.m)
+
+        for n in xrange(self.n):
+            for m in xrange(other.m):
+                pass #ret[n, m] += self[n, m] * other[m, n]
+
+        return ret
         
     def __rmul__(self, other):
         pass
