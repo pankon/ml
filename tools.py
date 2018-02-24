@@ -39,10 +39,24 @@ class TwoDArray(object): # yes, I know everything exists in numpy already.
     	[3, 4]
     ]
     >>> arr = [TwoDArray(1, 2, [[1], [2]]), TwoDArray(2, 1, [[54, 21]])]
-    >>> print arr[0]
-    >>> print arr[1]
-    >>> print arr[0] * arr[1]
-    
+    >>> print arr[0] # doctest: +NORMALIZE_WHITESPACE
+    [
+    	[1],
+    	[2]
+    ]
+    >>> print arr[1] # doctest: +NORMALIZE_WHITESPACE
+    [
+    	[54, 21]
+    ]
+    >>> print arr[0] * arr[1] # doctest: +NORMALIZE_WHITESPACE
+    [
+        [96]
+    ]  
+    >>> print arr[1] * arr[0] # doctest: +NORMALIZE_WHITESPACE
+    [
+    	[54, 54],
+    	[42, 42]
+    ]
     """
     def __init__(self, m, n, array=None):
         self.m = m
@@ -99,10 +113,6 @@ class TwoDArray(object): # yes, I know everything exists in numpy already.
     def __sub(obj1, obj2):
         return obj1 - obj2
         
-    @staticmethod
-    def __mult(obj1, obj2):
-        return obj1 * obj2
-    
     def __identical_check(self, other):
         if other.m != self.m and other.n != self.n:
             raise Exception("Arrays are not of same dimensions!")
@@ -126,19 +136,31 @@ class TwoDArray(object): # yes, I know everything exists in numpy already.
         return ret            
         
     def __mul__(self, other):
-        if self.n != other.m:
+        if other.n != self.m:
             raise Exception("Arrays are not of same dimensions for multiplication!")
 
-        ret = TwoDArray(other.n, self.m)
+        ret = TwoDArray(self.m, other.n)
 
-        for n in xrange(self.n):
-            for m in xrange(other.m):
-                pass #ret[n, m] += self[n, m] * other[m, n]
+        for n in xrange(other.n):
+            for m in xrange(self.m):
+                for k in xrange(self.n):
+                    ret[n, m] += self[k, n] * other[n, k]
 
         return ret
         
     def __rmul__(self, other):
-        pass
+        if self.n != other.m:
+            raise Exception("Arrays are not of same dimensions for multiplication!")
+
+        ret = TwoDArray(other.m, self.n)
+
+        for n in xrange(self.n):
+            for m in xrange(other.m):
+                for k in xrange(self.n):
+                    print n, m, self[n, k] * other[k, n]
+                    ret[n, m] += self[n, k] * other[k, n]
+
+        return ret
         
 if __name__ == "__main__":
     import doctest
