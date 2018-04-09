@@ -70,6 +70,8 @@ class TwoDArray(object): # yes, I know everything exists in numpy already.
     def singular_value_decomposition(self):
         u, sig, v_star = 0, 0, 0
         pass
+    
+    pinv = singular_vaue_decomposition
         
     def __str__(self):
         return "[\n\t{}\n]".format(',\n\t'.join(str(data_set) for data_set in self._array))

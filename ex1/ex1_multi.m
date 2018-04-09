@@ -38,6 +38,7 @@ data = load('ex1data2.txt');
 X = data(:, 1:2);
 y = data(:, 3);
 m = length(y);
+sample_house = [ 1 1650 3 ];
 
 % Print out some data points
 fprintf('First 10 examples from the dataset: \n');
@@ -104,7 +105,7 @@ fprintf('\n');
 % ====================== YOUR CODE HERE ======================
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
-price = 0; % You should change this
+price = sample_house * theta; % You should change this
 
 
 % ============================================================
@@ -149,7 +150,7 @@ fprintf('\n');
 
 % Estimate the price of a 1650 sq-ft, 3 br house
 % ====================== YOUR CODE HERE ======================
-price = 0; % You should change this
+price = sample_house * theta; % You should change this
 
 
 % ============================================================
